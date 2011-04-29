@@ -1,0 +1,2 @@
+from collectiveconfigviewslayer import ICollectiveConfigviewsLayer
+
