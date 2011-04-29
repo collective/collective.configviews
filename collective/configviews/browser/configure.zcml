@@ -2,7 +2,12 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="collective.configviews">
     <!-- -*- extra stuff goes here -*- -->
-
+    <browser:page
+      name="configviewsform"
+      for="*"
+      class=".form.ConfigurationFormView"
+      permission="zope2.View"
+      />
     <!-- If you are using plone version 3.0, you will need to include the 
          plone.browserlayer package in your buildout and uncomment the following
          line in order to use ICollectiveConfigviewsLayer as a layer attribute -->

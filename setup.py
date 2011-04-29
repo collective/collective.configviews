@@ -25,6 +25,8 @@ setup(name='collective.configviews',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.autoform',
+          'plone.app.registry',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

@@ -17,6 +17,9 @@
   <!-- -*- extra stuff goes here -*- -->
 
   <i18n:registerTranslations directory="locales" />
-  
-  
+
+  <include package="plone.app.registry" />
+  <include package=".browser" />
+  <adapter factory=".storage.AnnotationStorage" />
+
 </configure>
