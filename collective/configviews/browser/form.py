@@ -13,18 +13,19 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     def schema(self):
         """If viewname is provided in the request it will be used to get the view
         else we use the default view"""
-        url = self.context.absolute_url()
+        state = component.queryMultiAdapter((self.context, self.request),
+                                            name='plone_context_state')
+        url = state.view_url()
         viewname = self.request.get('configviewname', None)
         if viewname is None:
-            view = None #TODO: get the view from default view
-        else:
-            url += '/'+viewname
-            view = component.queryMultiAdapter((self.context, self.request),
-                                               name=viewname)
+            viewname = self.context.getLayout()
+            url = state.canonical_object_url()+'/' +viewname
+        view = component.queryMultiAdapter((self.context, self.request),
+                                           name=viewname)
 
         if interfaces.IConfigurableView.providedBy(view):
             return view.settings_schema
-        #TODO: add a message
+
         self.request.response.redirect(url)
 
     @button.buttonAndHandler(u'Save settings')
