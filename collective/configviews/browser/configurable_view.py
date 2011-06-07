@@ -22,7 +22,8 @@ class ConfigurableBaseView(BrowserView):
         self._settings = None
         self._settings_form = None
 
-    def get_settings(self):
+    @property
+    def settings(self):
         """See interface IConfigurableView"""
         if not self._settings_storage:
             self._settings_storage = interfaces.IConfigurationStorage(self)
@@ -30,37 +31,6 @@ class ConfigurableBaseView(BrowserView):
             self._settings = self._settings_storage.get()
 
         return self._settings
-
-    def set_settings(self, configuration):
-        """See interface IConfigurableView"""
-        if not self._settings_storage:
-            self._settings_storage = interfaces.IConfigurationStorage(self)
-        return self._settings_storage.set(configuration)
-
-    settings = property(get_settings, set_settings)
-
-    def get_settings_form(self):
-        """See interface IConfigurableView"""
-
-        if not self._settings_form:
-            self._settings_form = self.__create_form_page()
-
-        return self._harlequin_form
-
-    def set_settings_form(self, formpage):
-        """See interface IConfigurableView"""
-        self._settings_form = formpage
-
-    settings_form   = property(get_settings_form, set_settings_form)
-
-
-    def __create_form_page(self):
-        """See interface IConfigurableView"""
-        return "my html form"
-#        form = metaclass.makeClass('HarlequinMetaForm',(forms.Form,), {})
-#        form.fields = forms.field.Fields(self.harlequin_schema)
-#        form.label = _("Harlequin dynamic configuration form")
-#        return layout.wrap_form(form)
 
     def settings_javascripts(self):
         return "%s = %s"%(self.jsvarname, json.dumps(self.settings))

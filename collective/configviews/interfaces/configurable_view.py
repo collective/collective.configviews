@@ -8,7 +8,6 @@ class IConfigurableView(interface.Interface):
 
     settings = schema.Object(schema.interfaces.IDict)
     jsvarname = schema.ASCIILine(title=u"JavaScript var name")
-    settings_form = schema.Object(IViewView)
     settings_schema = schema = schema.Object(interface.interfaces.IInterface)
 
     def settings_javascripts():
