@@ -16,7 +16,6 @@ class ConfigurableBaseView(BrowserView):
     settings_schema = interface.Interface
 
     def __init__(self, context, request):
-        """See interface"""
         self.context = context
         self.request = request
         self._settings_storage = None
@@ -24,16 +23,16 @@ class ConfigurableBaseView(BrowserView):
         self._settings_form = None
 
     def get_settings(self):
-        """Accessor to harlequin_config."""
+        """See interface IConfigurableView"""
         if not self._settings_storage:
             self._settings_storage = interfaces.IConfigurationStorage(self)
         if not self._settings:
             self._settings = self._settings_storage.get()
-        
+
         return self._settings
 
     def set_settings(self, configuration):
-        """Mutator"""
+        """See interface IConfigurableView"""
         if not self._settings_storage:
             self._settings_storage = interfaces.IConfigurationStorage(self)
         return self._settings_storage.set(configuration)
@@ -41,7 +40,7 @@ class ConfigurableBaseView(BrowserView):
     settings = property(get_settings, set_settings)
 
     def get_settings_form(self):
-        """Accessor to harlequin_form."""
+        """See interface IConfigurableView"""
 
         if not self._settings_form:
             self._settings_form = self.__create_form_page()
@@ -49,14 +48,14 @@ class ConfigurableBaseView(BrowserView):
         return self._harlequin_form
 
     def set_settings_form(self, formpage):
-       """Mutator to harlequin_form."""
-       self._settings_form = formpage
+        """See interface IConfigurableView"""
+        self._settings_form = formpage
 
     settings_form   = property(get_settings_form, set_settings_form)
 
 
     def __create_form_page(self):
-        """Create a form page based on the schema"""
+        """See interface IConfigurableView"""
         return "my html form"
 #        form = metaclass.makeClass('HarlequinMetaForm',(forms.Form,), {})
 #        form.fields = forms.field.Fields(self.harlequin_schema)

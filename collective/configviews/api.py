@@ -1,0 +1,1 @@
+from browser.configurable_view import ConfigurableBaseView

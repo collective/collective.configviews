@@ -72,9 +72,11 @@ class AnnotationStorage(object):
         defaults_portal = self._get_defaults_portal()
 
         #update defaults with portal data:
+
         for field_name in defaults:
-            if field_name in defaults_portal:
-                defaults[field_name] = defaults_portal[field_name]
+            default_portal = getattr(defaults_portal,field_name)
+            if default_portal:
+                defaults[field_name] = default_portal
 
         return defaults
 
