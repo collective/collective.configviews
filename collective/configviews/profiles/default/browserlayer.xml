@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <layers>
-    <!-- -*- extra stuff goes here -*- -->
-
-    <layer name="CollectiveConfigviews"
-        interface="collective.configviews.interfaces.collectiveconfigviewslayer.ICollectiveConfigviewsLayer"
+    <layer name="CollectiveConfigViews"
+        interface="collective.configviews.interfaces.IConfigViewsLayer"
     />
 </layers>
-

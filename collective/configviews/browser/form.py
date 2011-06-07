@@ -5,6 +5,8 @@ from plone.z3cform import layout
 
 from collective.configviews import interfaces
 
+from Products.Five import BrowserView
+
 class ConfigurationForm(AutoExtensibleForm, form.Form):
     """Form to configure default view"""
     ignoreContext = True
@@ -34,6 +36,11 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
         storage.set(data)
         self.status = u"Changed saved."
 
+        state = component.queryMultiAdapter((self.context, self.request),
+                                            name='plone_context_state')
+        url = state.view_url()
+        self.request.response.redirect(url)
+
     def getView(self):
         viewname = self.context.getLayout()
         view = component.queryMultiAdapter((self.context, self.request),
@@ -57,3 +64,13 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
 
 
 ConfigurationFormView = layout.wrap_form(ConfigurationForm)
+
+class Utils(BrowserView):
+    """Utils view"""
+    
+    def config_allowed(self):
+        #TODO: permission is already checked by plone
+        viewname = self.context.getLayout()
+        view = component.queryMultiAdapter((self.context, self.request),
+                                           name=viewname)
+        return interfaces.IConfigurableView.providedBy(view)

@@ -1,3 +1,0 @@
-from collectiveconfigviewslayer import ICollectiveConfigviewsLayer
-from storage import IConfigurationStorage
-from configurable_view import IConfigurableView

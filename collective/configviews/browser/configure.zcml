@@ -7,22 +7,15 @@
       for="*"
       class=".form.ConfigurationFormView"
       permission="zope2.View"
+      layer="collective.configviews.interfaces.IConfigViewsLayer"
       />
-    <!-- If you are using plone version 3.0, you will need to include the 
-         plone.browserlayer package in your buildout and uncomment the following
-         line in order to use ICollectiveConfigviewsLayer as a layer attribute -->
-    <!-- 
-    <include package="plone.browserlayer" />
-    -->
-    <!-- Example of browser component with ICollectiveConfigviewsLayer layer attribute -->
-    <!-- 
     <browser:page
-        name="my-view"
-        for="*"
-        permission="zope.Public"
-        template="my-view.pt"
-        layer="..interfaces.ICollectiveConfigviewsLayer"
-        />
-    -->
+      name="configviews"
+      for="*"
+      class=".form.Utils"
+      permission="zope2.View"
+      layer="collective.configviews.interfaces.IConfigViewsLayer"
+      allowed_interface="collective.configviews.interfaces.IConfigViewsUtils"
+      />
 
 </configure>
