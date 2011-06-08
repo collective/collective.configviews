@@ -4,7 +4,14 @@ class FakeSchema(object):
     def __init__(self):
         self.fields = []
 
+    def __getitem__(self, key):
+        return self.fields[key]
+
 fake_schema = FakeSchema()
+
+class FakeField(object):
+    def __init__(self, default):
+        self.default = default
 
 class FakeConfigurableView(object):
     jsvarname = "jsvarname"
@@ -39,3 +46,14 @@ class FakeContext(object):
         self.id = "myid"
         self.title = "a title"
         self.aq_inner = self
+
+class FakeRegistry(object):
+    def __init__(self):
+        self.configuration = {}
+    
+    def forInterface(self, schema,check=True):
+        class Proxy:
+            def __init__(self):
+                self.foo = 'bar'
+                self.boo = 'far'
+        return Proxy()

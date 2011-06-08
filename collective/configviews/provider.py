@@ -21,28 +21,32 @@ class InterfaceDefault(object):
         self.context = context
         self.view = view
         self.schema = view.settings_schema
+        self.fields = []
 
     def get(self):
-        fields = schema.getFields(self.schema)
+        fields = self.getFields()
         configuration = {}
         for field_name in fields:
             configuration[field_name] = fields[field_name].default
         return configuration
 
-class PloneRegistry(object):
+    def getFields(self):
+        if not self.fields:
+            self.fields = schema.getFields(self.schema)
+        return self.fields
+
+class PloneRegistry(InterfaceDefault):
     """Configuration provider based on plone.app.registry"""
     interface.implements(interfaces.IConfigurationProvider)
     component.adapts(interfaces.IConfigurableView)
 
     def __init__(self, view):
-        context = view.context.aq_inner
-        self.context = context
-        self.view = view
-        self.schema = view.settings_schema
+        super(PloneRegistry,self).__init__(view)
+        self.registry = None
 
     def get(self):
-        fields = schema.getFields(self.schema)
-        registry = component.queryUtility(IRegistry)
+        fields = self.getFields()
+        registry = self.getRegistry()
         settings = {}
         if registry:
             proxy = registry.forInterface(self.schema, check=False)
@@ -50,31 +54,35 @@ class PloneRegistry(object):
                 settings[field] = getattr(proxy, field)
         return settings
 
-class ZopeAnnotation(object):
+    def getRegistry(self):
+        if not self.registry:
+            self.registry = component.queryUtility(IRegistry)
+        return self.registry
+
+class ZopeAnnotation(InterfaceDefault):
     """Implements ConfigProvider with Annotation"""
 
     interface.implements(interfaces.IConfigurationProvider)
     component.adapts(interfaces.IConfigurableView)
 
     def __init__(self, view):
-        context = view.context.aq_inner
-        self.context = context
-        self.view = view
-        self.schema = view.settings_schema
-        self.storage = self._annotations()
+        super(ZopeAnnotation,self).__init__(view)
+        self.storage = None
 
     def get(self):
         """see IHarlequinStorage. This implementation return all default 
         values of the schema is nothing has already been saved"""
-
-        if STORAGE_KEY not in self.storage.keys():
+        annotation = self.getAnnotation()
+        if STORAGE_KEY not in annotation.keys():
             return {}
 
-        return self.storage[STORAGE_KEY]
+        return annotation[STORAGE_KEY]
 
-    def _annotations(self):
+    def getAnnotation(self):
         """Return the persistent dict that will embed the configuration"""
-        return IAnnotations(self.context)
+        if self.annotation is None:
+            self.annotation = IAnnotations(self.context)
+        return self.annotation
 
 class Provider(object):
     """Aggregator of named providers"""

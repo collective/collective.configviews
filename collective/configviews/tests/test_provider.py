@@ -7,7 +7,6 @@ class ProviderUnitTest(base.UnitTestCase):
         self.view = utils.FakeConfigurableView()
         self.provider_module = provider
         self.provider = provider.Provider(self.view)
-        #monkey patch init providers
         self.provider.providers = [utils.FakeConfigurationProvider()]
 
     def test_get(self):
