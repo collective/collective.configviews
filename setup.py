@@ -15,9 +15,9 @@ setup(name='collective.configviews',
         "Programming Language :: Python",
         ],
       keywords='',
-      author='',
-      author_email='jeanmichel.francois@makina-corpus.com',
-      url='http://svn.plone.org/svn/collective/',
+      author='JeanMichel FRANCOIS aka toutpt',
+      author_email='toutpt@gmail.com',
+      url='https://github.com/collective/collective.configviews',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['collective'],
@@ -32,7 +32,6 @@ setup(name='collective.configviews',
       extras_require = {'test': ['plone.app.testing']},
       entry_points="""
       # -*- Entry points: -*-
-
       [z3c.autoinclude.plugin]
       target = plone
       """,
