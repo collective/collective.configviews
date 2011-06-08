@@ -88,7 +88,27 @@ in your own browser view.
 The default behavior is to use 'context.zope.app.annotation' as mutator and
 the following providers:
 
-* default.zope.interface
 * site.plone.app.registry
 * context.zope.app.annotation
 
+Credits
+=======
+
+Companies
+---------
+
+|makinacom|_
+
+  * `Planet Makina Corpus <http://www.makina-corpus.org>`_
+  * `Contact us <mailto:python@makina-corpus.org>`_
+
+
+Authors
+
+  - JeanMichel FRANCOIS aka toutpt <toutpt@gmail.com>
+
+Contributors
+
+
+.. |makinacom| image:: http://depot.makina-corpus.org/public/logo.gif
+.. _makinacom:  http://www.makina-corpus.com
