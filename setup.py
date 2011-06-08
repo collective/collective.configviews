@@ -29,12 +29,11 @@ setup(name='collective.configviews',
           'plone.app.registry',
           # -*- Extra requirements: -*-
       ],
+      extras_require = {'test': ['plone.app.testing']},
       entry_points="""
       # -*- Entry points: -*-
 
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )
