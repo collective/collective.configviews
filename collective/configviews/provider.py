@@ -67,7 +67,7 @@ class ZopeAnnotation(InterfaceDefault):
 
     def __init__(self, view):
         super(ZopeAnnotation,self).__init__(view)
-        self.storage = None
+        self.annotation = None
 
     def get(self):
         """see IHarlequinStorage. This implementation return all default 
@@ -84,18 +84,12 @@ class ZopeAnnotation(InterfaceDefault):
             self.annotation = IAnnotations(self.context)
         return self.annotation
 
-class Provider(object):
+class Provider(InterfaceDefault):
     """Aggregator of named providers"""
-    interface.implements(interfaces.IConfigurationProvider)
-    component.adapts(interfaces.IConfigurableView)
 
     def __init__(self, view):
-        context = view.context.aq_inner
-        self.context = context
-        self.view = view
-        self.schema = view.settings_schema
-        self.pnames = ['default.zope.interface']
-        self.pnames.extend(view.settings_providers)
+        super(Provider,self).__init__(view)
+        self.pnames = view.settings_providers
         self.providers = []
         self.configuration = {}
 
@@ -104,6 +98,7 @@ class Provider(object):
             return self.configuration
 
         self.init_providers()
+        self.configuration = super(Provider, self).get() #load defaults
 
         for provider in self.providers:
             configuration = provider.get()

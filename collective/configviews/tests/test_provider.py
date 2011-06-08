@@ -28,7 +28,5 @@ class ProviderUnitTest(base.UnitTestCase):
         self.failUnless(mysettings['other'] == 'great')
 
     def test_pnames(self):
-        #zope interface is the default provider
-        self.failUnless(len(self.provider.pnames)==2)
-        self.failUnless(self.provider.pnames[0]=='default.zope.interface')
-        self.failUnless(self.provider.pnames[1]==self.view.settings_providers[0])
+        self.failUnless(len(self.provider.pnames)==1) #the one set by the view
+        self.failUnless(self.provider.pnames[0]==self.view.settings_providers[0])
