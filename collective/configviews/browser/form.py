@@ -11,6 +11,15 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     """Form to configure default view"""
     ignoreContext = True
 
+    def update(self):
+        super(ConfigurationForm,self).update()
+        provider = self.getProvider()
+        settings = provider.get()
+        for widgetkey in self.widgets:
+            widget = self.widgets[widgetkey]
+            name = widget.field.getName()
+            widget.value = unicode(settings[name])
+
     @property
     def schema(self):
         """If viewname is provided in the request it will be used to get the view
@@ -32,8 +41,8 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
             #TODO: handle errors
             return
 
-        storage = self.getStorage()
-        storage.set(data)
+        mutator = self.getMutator()
+        mutator.set(data)
         self.status = u"Changed saved."
 
         state = component.queryMultiAdapter((self.context, self.request),
@@ -48,22 +57,21 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
         if not interfaces.IConfigurableView.providedBy(view):
             return
         return view
-    
-    def getStorage(self):
-        view = self.getView()
-        return interfaces.IConfigurationStorage(view)
 
-    def update(self):
-        super(ConfigurationForm,self).update()
-        storage = self.getStorage()
-        settings = storage.get()
-        for widgetkey in self.widgets:
-            widget = self.widgets[widgetkey]
-            name = widget.field.getName()
-            widget.value = unicode(settings[name])
+    def getProvider(self):
+        view = self.getView()
+        return interfaces.IConfigurationProvider(view)
+
+    def getMutator(self):
+        view = self.getView()
+        name = view.settings_mutator
+        adapter = component.queryAdapter(view, interfaces.IConfigurationMutator,
+                                         name)
+        return adapter
 
 
 ConfigurationFormView = layout.wrap_form(ConfigurationForm)
+
 
 class Utils(BrowserView):
     """Utils view"""

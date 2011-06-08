@@ -20,6 +20,11 @@
 
   <include package="plone.app.registry" />
   <include package=".browser" />
-  <adapter factory=".storage.AnnotationStorage" />
+<!--   <adapter factory=".storage.AnnotationStorage" /> -->
+  <adapter factory=".provider.Provider"/>
+  <adapter name="default.zope.interface"  factory=".provider.InterfaceDefault"/>
+  <adapter name="site.plone.app.registry" factory=".provider.PloneRegistry"/>
+  <adapter name="context.zope.annotation" factory=".mutator.ZopeAnnotation"
+           provides=".interfaces.IConfigurationMutator"/>
 
 </configure>

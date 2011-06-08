@@ -15,21 +15,28 @@ class IConfigurableView(interface.Interface):
 
     settings = schema.Object(schema.interfaces.IDict)
     jsvarname = schema.ASCIILine(title=u"JavaScript var name")
-    settings_schema = schema = schema.Object(interface.interfaces.IInterface)
+    settings_schema = schema.Object(interface.interfaces.IInterface)
+    settings_providers = schema.List(title=u"Settings providers",
+                                     value_type=schema.ASCIILine(title=u"Provider"))
+    settings_mutator = schema.ASCIILine(title=u"Mutator name")
 
     def settings_javascripts():
         """Return a string with JavaScript content to declare the
         variable with the settings in json inside"""
 
-class IConfigurationStorage(interface.Interface):
+class IConfigurationProvider(interface.Interface):
+    """Configuration provider"""
+
+    def get():
+        """-> dict with configuration like if it was extracted from the form
+        """
+
+class IConfigurationMutator(IConfigurationProvider):
     """Configuration storage manager"""
 
     def set(configuration):
         """Create or update configuration stored in instance."""
 
-    def get():
-        """-> dict with configuration like if it was extracted from the form
-        """
 
 class IConfigViewsUtils(interface.Interface):
     """utils"""

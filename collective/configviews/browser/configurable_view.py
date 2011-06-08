@@ -14,21 +14,20 @@ class ConfigurableBaseView(BrowserView):
 
     jsvarname = "collectiveconfigviews"
     settings_schema = interface.Interface
+    settings_providers = ('site.plone.app.registry','context.zope.annotation')
+    settings_mutator = 'context.zope.annotation'
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
-        self._settings_storage = None
         self._settings = None
-        self._settings_form = None
 
     @property
     def settings(self):
         """See interface IConfigurableView"""
-        if not self._settings_storage:
-            self._settings_storage = interfaces.IConfigurationStorage(self)
         if not self._settings:
-            self._settings = self._settings_storage.get()
+            provider = interfaces.IConfigurationProvider(self)
+            self._settings = provider.get()
 
         return self._settings
 
