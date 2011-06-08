@@ -1,6 +1,6 @@
   # -*- extra stuff goes here -*- 
 
-from api import *
+from browser.configurable_view import ConfigurableBaseView
 
 def initialize(context):
     """Initializer called when used as a Zope 2 product."""
