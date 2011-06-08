@@ -1,6 +1,9 @@
 Introduction
 ============
 
+This add-on does not provide new feature to Plone. It is intended to plone
+add-ons developers.
+
 If you need to create a browser view with configuration this add-on will make 
 your life easier.
 
@@ -54,13 +57,10 @@ IConfigurationProvider
 This component is responsible to return settings. It has been implemented
 in different adapters
 
-Provider (no named adapter): this provider force the use of the 
-'default.zope.interface' provider and aggregate all providers specified in the
-view throw the settings_provider attributes. Warning: The order is important,
-each settings are taken from the last provider which provide it.
-
-'default.zope.interface': this provider return default values of each field of 
-the settings schema
+Provider (no named adapter): this provider load default values from the interface
+fields defaults values and it let other providers override values.
+It is an aggregation of all providers specified in the view throw the settings_providers attribute.
+Warning: The order is important, each settings are taken from the last provider which provide it.
 
 'site.plone.app.registry': this provider return values from plone.app.registry
 (you have to register your settings_schema as records in registry.xml)
