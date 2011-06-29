@@ -13,12 +13,14 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
 
     def update(self):
         super(ConfigurationForm,self).update()
-        provider = self.getProvider()
-        settings = provider.get()
-        for widgetkey in self.widgets:
-            widget = self.widgets[widgetkey]
-            name = widget.field.getName()
-            widget.value = unicode(settings[name])
+        form = self.request.form
+        if not form:
+            provider = self.getProvider()
+            settings = provider.get()
+            for key in settings:
+                form['form.widgets.'+key] = settings[key]
+            super(ConfigurationForm,self).update()
+
 
     @property
     def schema(self):
