@@ -7,20 +7,12 @@ from collective.configviews import interfaces
 
 from Products.Five import BrowserView
 
-class ConfigurationForm(AutoExtensibleForm, form.Form):
+class ConfigurationForm(AutoExtensibleForm, form.EditForm):
     """Form to configure default view"""
-    ignoreContext = True
 
-    def update(self):
-        super(ConfigurationForm,self).update()
-        form = self.request.form
-        if not form:
-            provider = self.getProvider()
-            settings = provider.get()
-            for key in settings:
-                form['form.widgets.'+key] = settings[key]
-            super(ConfigurationForm,self).update()
-
+    def getContent(self):
+        provider = self.getProvider()
+        return provider.get()
 
     @property
     def schema(self):

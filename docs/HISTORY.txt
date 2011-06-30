@@ -4,7 +4,7 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix config form (http://stackoverflow.com/q/6524304/622081)
 
 
 1.0b1 (2011-06-08)
