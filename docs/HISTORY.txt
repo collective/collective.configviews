@@ -6,6 +6,8 @@ Changelog
 
 - Optimization of storage: defaults are now based on all provider except zope.app.annotation
   [toutpt]
+- fix case where site.plone.app.registry are not set (value was set to None)
+  [toutpt]
 
 1.0b2 (2011-06-30)
 ------------------

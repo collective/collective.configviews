@@ -48,10 +48,14 @@ class PloneRegistry(InterfaceDefault):
         fields = self.getFields()
         registry = self.getRegistry()
         settings = {}
+
         if registry:
             proxy = registry.forInterface(self.schema, check=False)
             for field in fields:
-                settings[field] = getattr(proxy, field)
+                value = getattr(proxy, field)
+                if value is not None:
+                    settings[field] = value
+
         return settings
 
     def getRegistry(self):
