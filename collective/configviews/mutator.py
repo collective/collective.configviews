@@ -36,7 +36,7 @@ class ZopeAnnotation(provider.ZopeAnnotation):
         #we are storing in annotation, so we want value outside of this provider
         if 'zope.app.annotation' in provider.pnames:
             pnames = list(provider.pnames)
-            pnames.remove('zope.app.annotation')
+            pnames.remove('context.zope.annotation')
             provider.pnames = pnames
 
         return provider.get()
