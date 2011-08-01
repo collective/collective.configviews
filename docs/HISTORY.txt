@@ -4,8 +4,8 @@ Changelog
 1.0b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Optimization of storage: defaults are now based on all provider except zope.app.annotation
+  [toutpt]
 
 1.0b2 (2011-06-30)
 ------------------

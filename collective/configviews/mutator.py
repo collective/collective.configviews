@@ -32,8 +32,12 @@ class ZopeAnnotation(provider.ZopeAnnotation):
 
     def get_defaults(self):
         """This method return defaults values for the current view"""
-        fields = self.getFields()
-        defaults = {}
-        for field_name in fields:
-            defaults[field_name] = fields[field_name].default
-        return defaults
+        provider = interfaces.IConfigurationProvider(self.view)
+        #we are storing in annotation, so we want value outside of this provider
+        if 'zope.app.annotation' in provider.pnames:
+            pnames = list(provider.pnames)
+            pnames.remove('zope.app.annotation')
+            provider.pnames = pnames
+
+        return provider.get()
+
