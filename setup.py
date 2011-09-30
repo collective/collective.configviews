@@ -6,7 +6,7 @@ version = '2.0dev'
 setup(name='collective.configviews',
       version=version,
       description="Manage configuration of browser views",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
