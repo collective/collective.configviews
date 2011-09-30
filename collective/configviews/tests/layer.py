@@ -10,11 +10,14 @@ class Layer(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Load ZCML
+        import plone.app.registry
         import collective.configviews
         import collective.configviews.tests.example
+        self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=collective.configviews)
         self.loadZCML(package=collective.configviews.tests.example)
 
+        z2.installProduct(app, 'plone.app.registry')
         z2.installProduct(app, 'collective.configviews')
 
 
@@ -23,6 +26,7 @@ class Layer(PloneSandboxLayer):
 
     def tearDownZope(self, app):
         z2.uninstallProduct(app, 'collective.configviews')
+        z2.uninstallProduct(app, 'plone.app.registry')
 
 
 FIXTURE = Layer()

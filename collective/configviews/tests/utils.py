@@ -1,24 +1,40 @@
 #FAKE implementation of interfaces
 
+class FakeField(object):
+    def __init__(self, name, default):
+        self.default = default
+        self.name = None
+
 class FakeSchema(object):
+
     def __init__(self):
         self.fields = []
+        self.iterator = iter([])
+        self.addField('foo', 'bar')
+        self.addField('boo', 'far')
 
     def __getitem__(self, key):
-        return self.fields[key]
+        for field in self.fields:
+            if field.name == key:
+                return field
+        raise KeyError(key)
 
-fake_schema = FakeSchema()
+    def __iter__(self):
+        return self.iterator
 
-class FakeField(object):
-    def __init__(self, default):
-        self.default = default
+    def next(self):
+        return self.iterator.next()
+
+    def addField(self, name, default):
+        field = FakeField(name, default)
+        self.fields.append(field)
+        self.iterator = iter([field.name for field in self.fields])
+
 
 class FakeConfigurableView(object):
     jsvarname = "jsvarname"
 
-    settings_schema = fake_schema
-    settings_providers = ('myprovider',)
-    settings_mutator = 'mymutator'
+    settings_schema = FakeSchema()
 
     def __init__(self):
         self.context = FakeContext()
@@ -27,18 +43,6 @@ class FakeConfigurableView(object):
         
     def settings_javascripts(self):
         return ''
-
-class FakeConfigurationProvider(object):
-    def __init__(self):
-        self.configuration = {'foo':'bar'}
-    
-    def get(self):
-        return self.configuration
-
-class FakeConfigurationMutator(FakeConfigurationProvider):
-    def set(self, configuration):
-        self.configuration = configuration
-
 
 class FakeContext(object):
 

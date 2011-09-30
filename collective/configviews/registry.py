@@ -21,21 +21,21 @@ class Registry(object):
             self._registry = component.queryAdapter(self.context,
                                                     IRegistry)
         if self._records is None:
-            self._records = self._registry.forInterface(self.schema,
-                                                        check=False)
+            self._records = self._registry.forInterface(self.schema, check=False)
         if self._site_records is None:
             self._site_records = self._site_registry.forInterface(self.schema,
                                                         check=False)
+        if self._fields is None:
+            self._fields = schema.getFields(self.schema)
 
     def get(self):
         """Return settings as dict loaded in the current order: interface,
         portal_registry, context_registry"""
 
         if not self._settings:
-            import pdb;pdb.set_trace()
             self._settings = {}
             self.initialize()
-            fields = schema.getFields(self.schema)
+            fields = self._fields
             #first load interface defaults
             for field in fields:
                 self._settings[field] = fields[field].default
@@ -58,3 +58,5 @@ class Registry(object):
         fields = schema.getFields(self.schema)
         for field in fields:
             self._records[field] = values[field]
+
+        return self._fields
