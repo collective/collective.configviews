@@ -17,5 +17,12 @@
       layer="collective.configviews.interfaces.IConfigViewsLayer"
       allowed_interface="collective.configviews.interfaces.IConfigViewsUtils"
       />
+    <browser:page
+      name="example.configviews"
+      for="*"
+      class=".configurable_view.Example"
+      permission="zope2.View"
+      layer="collective.configviews.interfaces.IConfigViewsLayer"
+      />
 
 </configure>

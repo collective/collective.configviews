@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0b2dev'
+version = '2.0dev'
 
 setup(name='collective.configviews',
       version=version,
@@ -26,7 +26,8 @@ setup(name='collective.configviews',
       install_requires=[
           'setuptools',
           'plone.autoform',
-          'plone.app.registry',
+          'collective.registry',
+          'plone.registry',
           # -*- Extra requirements: -*-
       ],
       extras_require = {'test': ['plone.app.testing']},

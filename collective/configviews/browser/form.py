@@ -6,6 +6,7 @@ from plone.z3cform import layout
 from collective.configviews import interfaces
 
 from Products.Five import BrowserView
+from collective.configviews.registry import Registry
 
 class ConfigurationForm(AutoExtensibleForm, form.Form):
     """Form to configure default view"""
@@ -13,8 +14,10 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
 
     def update(self):
         super(ConfigurationForm,self).update()
-        provider = self.getProvider()
-        settings = provider.get()
+        import pdb;pdb.set_trace()
+
+        registry = self.getRegistry()
+        settings = registry.get()
         for widgetkey in self.widgets:
             widget = self.widgets[widgetkey]
             name = widget.field.getName()
@@ -36,13 +39,14 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     @button.buttonAndHandler(u'Save settings')
     def handle_settings(self, action):
         data, errors = self.extractData()
+
         view = self.getView()
         if view is None:
             #TODO: handle errors
             return
 
-        mutator = self.getMutator()
-        mutator.set(data)
+        registry = self.getRegistry()
+        registry.update(data)
         self.status = u"Changed saved."
 
         state = component.queryMultiAdapter((self.context, self.request),
@@ -51,24 +55,20 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
         self.request.response.redirect(url)
 
     def getView(self):
-        viewname = self.context.getLayout()
+        viewname = self.request.form.get('viewname',None)
+        if viewname is None:
+            viewname = self.context.getLayout()
+
         view = component.queryMultiAdapter((self.context, self.request),
                                            name=viewname)
         if not interfaces.IConfigurableView.providedBy(view):
             return
         return view
 
-    def getProvider(self):
+    def getRegistry(self):
         view = self.getView()
-        return interfaces.IConfigurationProvider(view)
-
-    def getMutator(self):
-        view = self.getView()
-        name = view.settings_mutator
-        adapter = component.queryAdapter(view, interfaces.IConfigurationMutator,
-                                         name)
-        return adapter
-
+        if view is not None:
+            return Registry(view)
 
 ConfigurationFormView = layout.wrap_form(ConfigurationForm)
 
