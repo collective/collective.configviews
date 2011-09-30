@@ -6,6 +6,7 @@ class Registry(object):
     
     def __init__(self, context):
         self.view = context
+        self.prefix = str(self.view.__name__)
         self.schema = self.view.settings_schema
         self.context = context.context
         self._settings = None
@@ -22,9 +23,12 @@ class Registry(object):
             self._registry = component.queryAdapter(self.context,
                                                     IRegistry)
         if self._records is None:
-            self._records = self._registry.forInterface(self.schema, check=False)
+            self._records = self._registry.forInterface(self.schema,
+                                                        prefix=self.prefix,
+                                                        check=False)
         if self._site_records is None:
             self._site_records = self._site_registry.forInterface(self.schema,
+                                                        prefix=self.prefix,
                                                         check=False)
         if self._fields is None:
             self._fields = schema.getFields(self.schema)
@@ -58,12 +62,13 @@ class Registry(object):
     def update(self, values):
         self.initialize()
         try:
-            self._records = self._registry.forInterface(self.schema)
+            self._records = self._registry.forInterface(self.schema,
+                                                        prefix=self.prefix)
         except KeyError, e:
-            #TODO: put the viewname into prefix
-            prefix = None
-            self._registry.registerInterface(self.schema, prefix=prefix)
-            self._records = self._registry.forInterface(self.schema)
+            self._registry.registerInterface(self.schema,
+                                             prefix=self.prefix)
+            self._records = self._registry.forInterface(self.schema,
+                                                        prefix=self.prefix)
 
         fields = schema.getFields(self.schema)
         for field in fields:

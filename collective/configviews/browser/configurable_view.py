@@ -15,6 +15,7 @@ class ConfigurableBaseView(BrowserView):
 
     jsvarname = "collectiveconfigviews"
     settings_schema = interface.Interface
+    settings_prefix = 'base'
 
     def __init__(self, context, request):
         self.context = context

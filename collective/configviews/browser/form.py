@@ -71,7 +71,8 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     def getView(self):
         viewname = self.request.form.get('viewname',None)
         if viewname is None:
-            viewname = self.request.form['form.widgets.IInternalConfigurationSchema.viewname']
+            z3viewkey = 'form.widgets.IInternalConfigurationSchema.viewname'
+            viewname = self.request.form.get(z3viewkey,None)
         elif viewname is None:
             viewname = self.context.getLayout()
 
