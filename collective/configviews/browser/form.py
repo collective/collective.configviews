@@ -1,4 +1,6 @@
 from zope import component
+from zope import interface
+from zope import schema
 from z3c.form import form, button
 from plone.autoform.form import AutoExtensibleForm
 from plone.z3cform import layout
@@ -7,21 +9,33 @@ from collective.configviews import interfaces
 
 from Products.Five import BrowserView
 from collective.configviews.registry import Registry
+from plone.autoform.interfaces import MODES_KEY
+
+class IInternalConfigurationSchema(interface.Interface):
+    viewname = schema.TextLine(title=u"view name")
+
+IInternalConfigurationSchema.setTaggedValue(MODES_KEY,
+                            [(interface.Interface, 'viewname','hidden')])
 
 class ConfigurationForm(AutoExtensibleForm, form.Form):
     """Form to configure default view"""
-    ignoreContext = True
+
+    additionalSchemata = (IInternalConfigurationSchema,)
 
     def update(self):
-        super(ConfigurationForm,self).update()
-        import pdb;pdb.set_trace()
-
-        registry = self.getRegistry()
-        settings = registry.get()
+        super(ConfigurationForm, self).update()
+        #update viewname field
         for widgetkey in self.widgets:
             widget = self.widgets[widgetkey]
             name = widget.field.getName()
-            widget.value = unicode(settings[name])
+            if name == 'viewname' and not widget.value:
+                widget.value = self.request.form.get('viewname')
+
+    def getContent(self):
+
+        registry = self.getRegistry()
+        settings = registry.get()
+        return settings
 
     @property
     def schema(self):
@@ -57,6 +71,8 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     def getView(self):
         viewname = self.request.form.get('viewname',None)
         if viewname is None:
+            viewname = self.request.form['form.widgets.IInternalConfigurationSchema.viewname']
+        elif viewname is None:
             viewname = self.context.getLayout()
 
         view = component.queryMultiAdapter((self.context, self.request),

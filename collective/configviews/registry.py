@@ -13,6 +13,7 @@ class Registry(object):
         self._site_registry = None
         self._records = None
         self._site_records = None
+        self._fields = None
 
     def initialize(self):
         if self._site_registry is None:
@@ -55,8 +56,20 @@ class Registry(object):
         return self._settings
 
     def update(self, values):
+        self.initialize()
+        try:
+            self._records = self._registry.forInterface(self.schema)
+        except KeyError, e:
+            #TODO: put the viewname into prefix
+            prefix = None
+            self._registry.registerInterface(self.schema, prefix=prefix)
+            self._records = self._registry.forInterface(self.schema)
+
         fields = schema.getFields(self.schema)
         for field in fields:
-            self._records[field] = values[field]
-
+            value = values.get(field)
+            if value is None:
+                continue
+            setattr(self._records, field, value)
+    
         return self._fields
