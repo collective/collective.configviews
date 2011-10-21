@@ -29,7 +29,8 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
             widget = self.widgets[widgetkey]
             name = widget.field.getName()
             if name == 'viewname' and not widget.value:
-                widget.value = self.request.form.get('viewname')
+                viewname = self.getViewName()
+                widget.value = viewname
 
     def getContent(self):
 
@@ -69,18 +70,22 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
         self.request.response.redirect(url)
 
     def getView(self):
-        viewname = self.request.form.get('viewname',None)
-        if viewname is None:
-            z3viewkey = 'form.widgets.IInternalConfigurationSchema.viewname'
-            viewname = self.request.form.get(z3viewkey,None)
-        elif viewname is None:
-            viewname = self.context.getLayout()
 
+        viewname = self.getViewName()
         view = component.queryMultiAdapter((self.context, self.request),
                                            name=viewname)
         if not interfaces.IConfigurableView.providedBy(view):
             return
         return view
+
+    def getViewName(self):
+        viewname = self.request.form.get('viewname',None)
+        if viewname is None:
+            z3viewkey = 'form.widgets.IInternalConfigurationSchema.viewname'
+            viewname = self.request.form.get(z3viewkey, None)
+        if viewname is None:
+            viewname = self.context.getLayout()
+        return viewname
 
     def getRegistry(self):
         view = self.getView()
