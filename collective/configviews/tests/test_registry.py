@@ -20,5 +20,16 @@ class RegistryUnitTest(base.UnitTestCase):
         self.failUnless(mysettings['boo'] == 'far')
 
     def test_update(self):
-        pass
+        values = {'foo':'foo'}
+        self.failUnless(self.registry.get()['foo']=='bar')
+        self.registry.update(values)
+        self.failUnless(getattr(self.registry._records,'foo',None)=='foo')
+        #check other has not changed
+        self.failUnless(getattr(self.registry._records,'boo',None)=='far')
+        #check cache has been invalidated
+        self.failUnless(self.registry.get()['foo']=='foo')
+
+        values = {'notexisting':'shouldnotberegistred'}
+        self.registry.update(values)
+        self.failUnless(self.registry.get().get('notexisting',None) is None)
 

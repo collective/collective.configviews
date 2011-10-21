@@ -40,6 +40,7 @@ class FakeConfigurableView(object):
         self.context = FakeContext()
         self.request = None
         self.settings = {}
+        self.__name__ = 'fakeview'
         
     def settings_javascripts(self):
         return ''
@@ -55,7 +56,7 @@ class FakeRegistry(object):
     def __init__(self):
         self.configuration = {}
     
-    def forInterface(self, schema,check=True):
+    def forInterface(self, schema,check=True, prefix=None):
         class Proxy:
             def __init__(self):
                 self.foo = 'bar'
