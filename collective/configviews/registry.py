@@ -37,7 +37,7 @@ class Registry(object):
         """Return settings as dict loaded in the current order: interface,
         portal_registry, context_registry"""
 
-        if not self._settings:
+        if self._settings is None:
             self._settings = {}
             self.initialize()
             fields = self._fields
@@ -70,11 +70,13 @@ class Registry(object):
             self._records = self._registry.forInterface(self.schema,
                                                         prefix=self.prefix)
 
-        fields = schema.getFields(self.schema)
-        for field in fields:
-            value = values.get(field)
+        for field in self._fields:
+            value = values.get(field,None)
             if value is None:
                 continue
             setattr(self._records, field, value)
+
+        #invalidate cache on settings:
+        self._settings = None
     
         return self._fields
