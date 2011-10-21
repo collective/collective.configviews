@@ -6,7 +6,6 @@ from Products.Five import BrowserView
 
 from collective.configviews import interfaces
 from collective.configviews.registry import Registry
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class ConfigurableBaseView(BrowserView):
     """Base browserview make it configurable view"""
@@ -15,7 +14,7 @@ class ConfigurableBaseView(BrowserView):
 
     jsvarname = "collectiveconfigviews"
     settings_schema = interface.Interface
-    settings_prefix = 'base'
+#    settings_prefix = 'base'
 
     def __init__(self, context, request):
         self.context = context
@@ -26,26 +25,15 @@ class ConfigurableBaseView(BrowserView):
     def initialize(self):
         if self._registry is None:
             self._registry = Registry(self)
+        if self._settings is None:
+            self._settings = self._registry.get()
 
     @property
     def settings(self):
         """See interface IConfigurableView"""
-        if not self._settings:
-            self.initialize()
-            self._settings = self._registry.get()
+        self.initialize()
 
         return self._settings
 
     def settings_javascripts(self):
         return "%s = %s"%(self.jsvarname, json.dumps(self.settings))
-
-from zope import schema
-
-class ExampleSchema(interface.Interface):
-    foo = schema.Bool(title=u"foo", default=True)
-    bar = schema.ASCIILine(title=u"bar",default="")
-    
-class Example(ConfigurableBaseView):
-    settings_schema = ExampleSchema
-
-    __call__ = ViewPageTemplateFile('example.pt')
