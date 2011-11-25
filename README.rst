@@ -11,6 +11,7 @@ Features:
 
 * Configuration providers
 * Configuration structure defined with zope.interface & zope.schema
+* Store configuration with plone.app.registry
 * Auto form to manage the configuration of the current view
 
 Why doing this in an add-on
@@ -23,11 +24,10 @@ form, ...
 How it works
 ============
 
-This add-ons define three components:
+This add-ons define two components:
 
-* IConfigurableView
-* IConfigurationProvider
-* IConfigurationMutator
+* ConfigurableView
+* Registry (IConfigurationStorage)
 
 The main idea, is you just have to create an zope.interface to define settings
 schema and set this schema in the 'settings_schema' attributes of the view.
@@ -45,51 +45,42 @@ For example::
         settings_schema = IMyViewSettings
 
         def width(self):
-            return self.settings['width']
+            return self.settings.width
 
         def height(self):
-            return self.settings['height']
+            return self.settings.height
 
 
-IConfigurationProvider
-----------------------
-
-This component is responsible to return settings. It has been implemented
-in different adapters
-
-Provider (no named adapter): this provider load default values from the interface
-fields defaults values and it let other providers override values.
-It is an aggregation of all providers specified in the view throw the settings_providers attribute.
-Warning: The order is important, each settings are taken from the last provider which provide it.
-
-'site.plone.app.registry': this provider return values from plone.app.registry
-(you have to register your settings_schema as records in registry.xml)
-
-'context.zope.app.annotation': this provider return values stored in annotation
-on the context of the view.
-
-'user.plone.app.users': TODO (not implemented yet)
-
-IConfigurationMutator
+IConfigurationStorage
 ---------------------
 
-This component is an extension of IConfigurationProvider with the write
-settings capabilities (throw its 'set' method). 
+This component is responsible to return settings. It has been implemented
+as an adapter from your configurable view.
 
-'context.zope.app.annontation': this mutator store the configuration in the 
-context of the view.
 
 IConfigurableView
 -----------------
 
-This component is implemented in a browserview you are supposed to inherits from
-in your own browser view.
+This component is implemented as a browserview. You have to inherits from 
+this one to create your own browser view.
 
-The default behavior is to use 'context.zope.app.annotation' as mutator and
-the following providers:
+Common use case: use a javascript library for a view
+====================================================
 
-* site.plone.app.registry
-* context.zope.app.annotation
+Most of javascript libraries wait for a dict to load their configuration. You
+can achieve this in a very easy way. You just have to define a configuration
+schema and add the following snippet in your template to create a javascript
+variable with the configuration ::
+
+  <script type="text/javascript" tal:content="view/settings_javascripts"></script>
+
+You can set the variable name throw the jsvarname attribute of your browserview.
+
+You will find examples in the following addons:
+
+* collective.galleria
+* collective.galleriffic
+* collective.googledocsviewer
 
 Credits
 =======
@@ -106,9 +97,6 @@ Companies
 Authors
 
   - JeanMichel FRANCOIS aka toutpt <toutpt@gmail.com>
-
-Contributors
-
 
 .. |makinacom| image:: http://depot.makina-corpus.org/public/logo.gif
 .. _makinacom:  http://www.makina-corpus.com

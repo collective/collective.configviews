@@ -9,7 +9,7 @@ class FakeSchema(object):
 
     def __init__(self):
         self.fields = []
-        self.iterator = iter([])
+        self.iterator = iter()
         self.addField('foo', 'bar')
         self.addField('boo', 'far')
 

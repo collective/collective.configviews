@@ -12,12 +12,20 @@ class RegistryUnitTest(base.UnitTestCase):
         self.registry._fields['boo'] = utils.FakeField('foo', 'bar')
         self.registry._site_registry = utils.FakeRegistry()
         self.registry._registry = utils.FakeRegistry()
+        self.registry.initialize()
 
-    def test_get(self):
-        mysettings = self.registry.get()
+    def test_settings_dict(self):
+        mysettings = self.registry.settings_dict()
         self.failUnless(len(mysettings.keys()) == 2, 'settings keys = %s'%len(mysettings.keys()))
         self.failUnless(mysettings['foo'] == 'bar')
         self.failUnless(mysettings['boo'] == 'far')
+
+    def test_settings(self):
+        settings = self.registry.settings()
+        import pdb;pdb.set_trace()
+        settings.foo
+        self.failUnless(settings.foo == 'bar')
+        self.failUnless(settings.boo == 'far')
 
     def test_update(self):
         values = {'foo':'foo'}

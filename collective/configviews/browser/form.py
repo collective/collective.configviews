@@ -35,7 +35,7 @@ class ConfigurationForm(AutoExtensibleForm, form.Form):
     def getContent(self):
 
         registry = self.getRegistry()
-        settings = registry.get()
+        settings = registry.settings_dict()
         return settings
 
     @property
@@ -99,7 +99,8 @@ class Utils(BrowserView):
     """Utils view"""
     
     def config_allowed(self):
-        #TODO: permission is already checked by plone
+        """permission is already checked by zope, here we are checking if
+        current view is a configurable view"""
         viewname = self.context.getLayout()
         view = component.queryMultiAdapter((self.context, self.request),
                                            name=viewname)

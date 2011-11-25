@@ -26,7 +26,7 @@ class ConfigurableBaseView(BrowserView):
         if self._registry is None:
             self._registry = Registry(self)
         if self._settings is None:
-            self._settings = self._registry.get()
+            self._settings = self._registry.settings_dict()
 
     @property
     def settings(self):
