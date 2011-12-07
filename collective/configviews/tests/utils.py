@@ -35,6 +35,30 @@ class FakeConfigurationProvider(object):
     def get(self):
         return self.configuration
 
+class FakeProvider(object):
+    """A fake for provider.Provider class"""
+    
+    def __init__(self, view):
+        self.context = view.context
+        self.view = view
+        self.schema = view.settings_schema
+        self.fields = []
+        self.pnames = view.settings_providers
+        self.providers = []
+        self.configuration = {}
+
+    def get(self):
+        if self.configuration:
+            return self.configuration
+
+        for provider in self.providers:
+            configuration = provider.get()
+            for key in configuration:
+                self.configuration[key] = configuration[key]
+
+        return self.configuration
+
+
 class FakeConfigurationMutator(FakeConfigurationProvider):
     def set(self, configuration):
         self.configuration = configuration

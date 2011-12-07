@@ -12,7 +12,11 @@ class MutatorZopeAnnotationUnitTest(base.UnitTestCase):
         self.mutator = mutator.ZopeAnnotation(self.view)
         self.mutator.annotation = {self.key:{}}
         self.mutator.fields = {'foo':utils.FakeField('bar'),
-                                'boo':utils.FakeField('far')}
+                               'boo':utils.FakeField('far')}
+        self.mutator._provider = utils.FakeProvider(self.view)
+        self.provider = utils.FakeConfigurationProvider()
+        self.provider.configuration['boo'] = 'far'
+        self.mutator._provider.providers.append(self.provider)
 
     def test_set(self):
         settings = self.mutator.get()
@@ -30,6 +34,8 @@ class MutatorZopeAnnotationUnitTest(base.UnitTestCase):
 
     def test_get_defaults(self):
         settings = self.mutator.get_defaults()
+        self.failUnless('foo' in settings.keys())
+        self.failUnless('boo' in settings.keys())
         self.failUnless(settings['foo']=='bar')
         self.failUnless(settings['boo']=='far')
 

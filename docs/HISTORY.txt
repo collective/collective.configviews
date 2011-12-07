@@ -4,8 +4,9 @@ Changelog
 1.0b4 (unreleased)
 ------------------
 
-- add new classifiers
-
+- add new classifiers [toutpt]
+- fix tests [toutpt]
+- fix issue making edit configuration not working [naro]
 
 1.0b3 (2011-08-01)
 ------------------
