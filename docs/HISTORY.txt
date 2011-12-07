@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b4 (unreleased)
+1.0b4 (2011-12-07)
 ------------------
 
 - add new classifiers [toutpt]
