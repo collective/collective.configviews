@@ -1,0 +1,14 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:gs="http://namespaces.zope.org/genericsetup"
+  i18n_domain="collective.configviews">
+        
+  <gs:upgradeStep
+    title="Upgrade collective.configviews to use local registry"
+    description="migrate to 2.0 (use collective.registry)"
+    source="*"
+    destination="2000"
+    handler=".upgrades.upgrade_to_2000"
+    profile="collective.configviews:default"/>
+
+</configure>
