@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0 (unreleased)
+2.0 (2012-01-30)
 ----------------
 
 - Use collective.registry instead of provider/mutator [toutpt]
