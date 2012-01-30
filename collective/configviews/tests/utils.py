@@ -3,13 +3,12 @@
 class FakeField(object):
     def __init__(self, name, default):
         self.default = default
-        self.name = None
+        self.name = name
 
 class FakeSchema(object):
 
     def __init__(self):
         self.fields = []
-        self.iterator = iter()
         self.addField('foo', 'bar')
         self.addField('boo', 'far')
 
@@ -20,7 +19,8 @@ class FakeSchema(object):
         raise KeyError(key)
 
     def __iter__(self):
-        return self.iterator
+        for field in self.fields:
+            yield field.name
 
     def next(self):
         return self.iterator.next()
@@ -28,7 +28,6 @@ class FakeSchema(object):
     def addField(self, name, default):
         field = FakeField(name, default)
         self.fields.append(field)
-        self.iterator = iter([field.name for field in self.fields])
 
 
 class FakeConfigurableView(object):

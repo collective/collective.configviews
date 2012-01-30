@@ -22,7 +22,6 @@ class RegistryUnitTest(base.UnitTestCase):
 
     def test_settings(self):
         settings = self.registry.settings()
-        import pdb;pdb.set_trace()
         settings.foo
         self.failUnless(settings.foo == 'bar')
         self.failUnless(settings.boo == 'far')
