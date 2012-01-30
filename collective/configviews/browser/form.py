@@ -17,7 +17,7 @@ class IInternalConfigurationSchema(interface.Interface):
 IInternalConfigurationSchema.setTaggedValue(MODES_KEY,
                             [(interface.Interface, 'viewname','hidden')])
 
-class ConfigurationForm(AutoExtensibleForm, form.Form):
+class ConfigurationForm(AutoExtensibleForm, form.EditForm):
     """Form to configure default view"""
 
     additionalSchemata = (IInternalConfigurationSchema,)
