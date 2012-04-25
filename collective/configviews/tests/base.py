@@ -1,6 +1,6 @@
 import unittest2 as unittest
-from plone.app import testing
-from collective.configviews.tests import layer
+
+from collective.configviews import testing as layer
 
 class UnitTestCase(unittest.TestCase):
     pass

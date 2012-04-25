@@ -12,11 +12,10 @@ class ConfigurableViewUnitTest(base.UnitTestCase):
 
     def test_settings(self):
         self.view._settings = {'foo':'bar'}
-        self.failUnless(self.view.settings['foo'] == 'bar')
+        self.assertTrue(self.view.settings['foo'] == 'bar')
     
     def test_javascripts(self):
         self.view._settings = {'foo':'bar'}
-        self.failUnless(self.view.settings_javascripts()=='collectiveconfigviews = {"foo": "bar"}')
+        self.assertTrue(self.view.settings_javascripts()=='collectiveconfigviews = {"foo": "bar"}')
         self.view.jsvarname = 'othername'
-        self.failUnless(self.view.settings_javascripts()=='othername = {"foo": "bar"}')
-
+        self.assertTrue(self.view.settings_javascripts()=='othername = {"foo": "bar"}')

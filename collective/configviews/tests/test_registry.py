@@ -16,27 +16,28 @@ class RegistryUnitTest(base.UnitTestCase):
 
     def test_settings_dict(self):
         mysettings = self.registry.settings_dict()
-        self.failUnless(len(mysettings.keys()) == 2, 'settings keys = %s'%len(mysettings.keys()))
-        self.failUnless(mysettings['foo'] == 'bar')
-        self.failUnless(mysettings['boo'] == 'far')
+        self.assertTrue(len(mysettings.keys()) == 2,
+                        'settings keys = %s'%len(mysettings.keys()))
+        self.assertTrue(mysettings['foo'] == 'bar')
+        self.assertTrue(mysettings['boo'] == 'far')
 
     def test_settings(self):
         settings = self.registry.settings()
         settings.foo
-        self.failUnless(settings.foo == 'bar')
-        self.failUnless(settings.boo == 'far')
+        self.assertTrue(settings.foo == 'bar')
+        self.assertTrue(settings.boo == 'far')
 
     def test_update(self):
         values = {'foo':'foo'}
-        self.failUnless(self.registry.get()['foo']=='bar')
+        self.assertTrue(self.registry.get()['foo']=='bar')
         self.registry.update(values)
-        self.failUnless(getattr(self.registry._records,'foo',None)=='foo')
+        self.assertTrue(getattr(self.registry._records,'foo',None)=='foo')
         #check other has not changed
-        self.failUnless(getattr(self.registry._records,'boo',None)=='far')
+        self.assertTrue(getattr(self.registry._records,'boo',None)=='far')
         #check cache has been invalidated
-        self.failUnless(self.registry.get()['foo']=='foo')
+        self.assertTrue(self.registry.get()['foo']=='foo')
 
         values = {'notexisting':'shouldnotberegistred'}
         self.registry.update(values)
-        self.failUnless(self.registry.get().get('notexisting',None) is None)
+        self.assertTrue(self.registry.get().get('notexisting',None) is None)
 
