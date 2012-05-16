@@ -1,4 +1,6 @@
-import base, utils
+import base
+import utils
+
 
 class ConfigurableViewUnitTest(base.UnitTestCase):
 
@@ -11,11 +13,13 @@ class ConfigurableViewUnitTest(base.UnitTestCase):
         self.provider_module = ConfigurableBaseView
 
     def test_settings(self):
-        self.view._settings = {'foo':'bar'}
+        self.view._settings = {'foo': 'bar'}
         self.assertTrue(self.view.settings['foo'] == 'bar')
-    
+
     def test_javascripts(self):
-        self.view._settings = {'foo':'bar'}
-        self.assertTrue(self.view.settings_javascripts()=='collectiveconfigviews = {"foo": "bar"}')
+        self.view._settings = {'foo': 'bar'}
+        t1 = 'collectiveconfigviews = {"foo": "bar"}'
+        self.assertTrue(self.view.settings_javascripts() == t1)
         self.view.jsvarname = 'othername'
-        self.assertTrue(self.view.settings_javascripts()=='othername = {"foo": "bar"}')
+        t2 = 'othername = {"foo": "bar"}'
+        self.assertTrue(self.view.settings_javascripts() == t2)

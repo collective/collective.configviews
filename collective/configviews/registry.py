@@ -6,11 +6,12 @@ from plone.registry.interfaces import IRegistry
 
 from collective.configviews import interfaces
 
+
 class Proxy(object):
     def __init__(self, registry, schema):
         self.__registry__ = registry
         self.__schema__ = schema
-    
+
     def __getattr__(self, name):
         if name not in self.__schema__:
             raise AttributeError(name)
@@ -18,6 +19,7 @@ class Proxy(object):
         if value is None:
             value = self.__schema__[name].missing_value
         return value
+
 
 class Registry(object):
     """Aggregate portal_registry and contextual_registry."""
@@ -53,15 +55,14 @@ class Registry(object):
                                                         check=False)
         if self._fields is None:
             self._fields = schema.getFields(self.schema)
-        
+
         if self._proxy is None:
             self._proxy = Proxy(self, self.schema)
-
 
     def settings(self):
         self.initialize()
         return self._proxy
-    
+
     def settings_dict(self):
         return self.get()
 
@@ -83,7 +84,7 @@ class Registry(object):
                 if value is not None:
                     self._settings[field] = value
             #finaly try to load context values
-            proxy =self._records
+            proxy = self._records
             for field in fields:
                 value = getattr(proxy, field)
                 if value is not None:
@@ -96,19 +97,19 @@ class Registry(object):
         try:
             self._records = self._registry.forInterface(self.schema,
                                                         prefix=self.prefix)
-        except KeyError, e:
+        except KeyError:
             self._registry.registerInterface(self.schema,
                                              prefix=self.prefix)
             self._records = self._registry.forInterface(self.schema,
                                                         prefix=self.prefix)
 
         for field in self._fields:
-            value = values.get(field,None)
+            value = values.get(field, None)
             if value is None:
                 continue
             setattr(self._records, field, value)
 
         #invalidate cache on settings:
         self._settings = None
-    
+
         return self._fields

@@ -5,9 +5,10 @@ from zope import interface
 
 
 class IConfigViewsLayer(interface.Interface):
-    """ A layer specific to this product. 
+    """ A layer specific to this product.
         Is registered using browserlayer.xml
     """
+
 
 class IConfigurableView(interface.Interface):
     """Make your view implements this, so you will have all the benefit of this
@@ -27,9 +28,10 @@ class IConfigurableView(interface.Interface):
     def settings_javascripts():
         """Return a string with JavaScript content to declare the
         variable with the settings in json inside.
-        
+
         myjsvarname = {'setting_attribute_1':'setting_value_1', ...}
         """
+
 
 class IConfigurationStorage(interface.Interface):
     """Storage for configuration aka registry."""

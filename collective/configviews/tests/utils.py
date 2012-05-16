@@ -1,9 +1,11 @@
 #FAKE implementation of interfaces
 
+
 class FakeField(object):
     def __init__(self, name, default):
         self.default = default
         self.name = name
+
 
 class FakeSchema(object):
 
@@ -40,9 +42,10 @@ class FakeConfigurableView(object):
         self.request = None
         self.settings = {}
         self.__name__ = 'fakeview'
-        
+
     def settings_javascripts(self):
         return ''
+
 
 class FakeContext(object):
 
@@ -51,11 +54,12 @@ class FakeContext(object):
         self.title = "a title"
         self.aq_inner = self
 
+
 class FakeRegistry(object):
     def __init__(self):
         self.configuration = {}
-    
-    def forInterface(self, schema,check=True, prefix=None):
+
+    def forInterface(self, schema, check=True, prefix=None):
         class Proxy:
             def __init__(self):
                 self.foo = 'bar'

@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 
 logger = logging.getLogger('collective.configviews')
 
+
 def upgrade_to_2000(context):
     """We need to migrate all configviews anotation to the new system.
     It will be done by trying to register the schema in the local registry
@@ -13,7 +14,7 @@ def upgrade_to_2000(context):
     from plone.registry.interfaces import IRegistry
 
     STORAGE_KEY = "collective.configviews"
-    
+
     catalog = getToolByName(context, 'portal_catalog')
     typestool = getToolByName(context, 'portal_types')
     for type_ in typestool.listContentTypes():
@@ -21,7 +22,7 @@ def upgrade_to_2000(context):
         for brain in brains:
             ob = brain.getObject()
             annotation = IAnnotations(ob)
-            
+
             if STORAGE_KEY not in annotation.keys():
                 continue
             else:
@@ -32,11 +33,13 @@ def upgrade_to_2000(context):
                 view = component.queryMultiAdapter((ob, ob.REQUEST),
                                                    name=layout)
                 if view is None:
-                    logger.info('we have found settings, but not on default view. -> delete')
+                    logger.info('we have found settings, but not on default \
+                      view. -> delete')
                     del annotation[STORAGE_KEY]
                     continue
                 if not hasattr(view, 'settings_schema'):
-                    logger.info('we have found settings, but not on default view. -> delete')
+                    logger.info('we have found settings, but not on default \
+                      view. -> delete')
                     del annotation[STORAGE_KEY]
                     continue
 
@@ -44,13 +47,13 @@ def upgrade_to_2000(context):
 
                 try:
                     proxy = lregistry.forInterface(settings_schema)
-                except KeyError,e:
+                except KeyError:
                     lregistry.registerInterface(settings_schema)
                     proxy = lregistry.forInterface(settings_schema)
-                
+
                 for key in settings_value:
                     #key == field name
                     setattr(proxy, key, settings_value[key])
-                
-                logger.info('configviews of %s migrated'%ob.absolute_url())
+
+                logger.info('configviews of %s migrated' % ob.absolute_url())
                 del annotation[STORAGE_KEY]

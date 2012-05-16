@@ -7,6 +7,7 @@ from Products.Five import BrowserView
 from collective.configviews import interfaces
 from collective.configviews.registry import Registry
 
+
 class ConfigurableBaseView(BrowserView):
     """Base browserview make it configurable view"""
 
@@ -36,4 +37,4 @@ class ConfigurableBaseView(BrowserView):
         return self._settings
 
     def settings_javascripts(self):
-        return "%s = %s"%(self.jsvarname, json.dumps(self.settings))
+        return "%s = %s" % (self.jsvarname, json.dumps(self.settings))

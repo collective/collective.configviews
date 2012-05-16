@@ -11,11 +11,13 @@ from Products.Five import BrowserView
 from collective.configviews.registry import Registry
 from plone.autoform.interfaces import MODES_KEY
 
+
 class IInternalConfigurationSchema(interface.Interface):
     viewname = schema.TextLine(title=u"view name")
 
 IInternalConfigurationSchema.setTaggedValue(MODES_KEY,
-                            [(interface.Interface, 'viewname','hidden')])
+                            [(interface.Interface, 'viewname', 'hidden')])
+
 
 class ConfigurationForm(AutoExtensibleForm, form.EditForm):
     """Form to configure default view"""
@@ -40,7 +42,8 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
 
     @property
     def schema(self):
-        """If viewname is provided in the request it will be used to get the view
+        """If viewname is provided in the request
+        it will be used to get the view
         else we use the default view"""
         state = component.queryMultiAdapter((self.context, self.request),
                                             name='plone_context_state')
@@ -79,7 +82,7 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
         return view
 
     def getViewName(self):
-        viewname = self.request.form.get('viewname',None)
+        viewname = self.request.form.get('viewname', None)
         if viewname is None:
             z3viewkey = 'form.widgets.IInternalConfigurationSchema.viewname'
             viewname = self.request.form.get(z3viewkey, None)
@@ -97,7 +100,7 @@ ConfigurationFormView = layout.wrap_form(ConfigurationForm)
 
 class Utils(BrowserView):
     """Utils view"""
-    
+
     def config_allowed(self):
         """permission is already checked by zope, here we are checking if
         current view is a configurable view"""
