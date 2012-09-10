@@ -6,6 +6,7 @@
     i18n_domain="collective.configviews">
 
   <five:registerPackage package="." initialize=".initialize" />
+  <include package="collective.registry" />
 
   <genericsetup:registerProfile
       name="default"
