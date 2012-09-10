@@ -4,7 +4,7 @@ Changelog
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added collective.registry in ZCML to prevent tests from breaking [rnd0101]
 
 
 2.0 (2012-01-30)
