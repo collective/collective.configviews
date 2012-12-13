@@ -1,48 +1,44 @@
 #FAKE implementation of interfaces
 
-class FakeField(object):
-    def __init__(self, name, default):
-        self.default = default
-        self.name = name
-
 class FakeSchema(object):
-
     def __init__(self):
         self.fields = []
-        self.addField('foo', 'bar')
-        self.addField('boo', 'far')
 
     def __getitem__(self, key):
-        for field in self.fields:
-            if field.name == key:
-                return field
-        raise KeyError(key)
+        return self.fields[key]
 
-    def __iter__(self):
-        for field in self.fields:
-            yield field.name
+fake_schema = FakeSchema()
 
-    def next(self):
-        return self.iterator.next()
-
-    def addField(self, name, default):
-        field = FakeField(name, default)
-        self.fields.append(field)
-
+class FakeField(object):
+    def __init__(self, default):
+        self.default = default
 
 class FakeConfigurableView(object):
     jsvarname = "jsvarname"
 
-    settings_schema = FakeSchema()
+    settings_schema = fake_schema
+    settings_providers = ('myprovider',)
+    settings_mutator = 'mymutator'
 
     def __init__(self):
         self.context = FakeContext()
         self.request = None
         self.settings = {}
-        self.__name__ = 'fakeview'
         
     def settings_javascripts(self):
         return ''
+
+class FakeConfigurationProvider(object):
+    def __init__(self):
+        self.configuration = {'foo':'bar'}
+    
+    def get(self):
+        return self.configuration
+
+class FakeConfigurationMutator(FakeConfigurationProvider):
+    def set(self, configuration):
+        self.configuration = configuration
+
 
 class FakeContext(object):
 
@@ -55,7 +51,7 @@ class FakeRegistry(object):
     def __init__(self):
         self.configuration = {}
     
-    def forInterface(self, schema,check=True, prefix=None):
+    def forInterface(self, schema,check=True):
         class Proxy:
             def __init__(self):
                 self.foo = 'bar'

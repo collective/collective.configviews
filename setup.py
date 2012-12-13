@@ -28,8 +28,7 @@ setup(name='collective.configviews',
       install_requires=[
           'setuptools',
           'plone.autoform',
-          'collective.registry',
-          'plone.registry',
+          'plone.app.registry',
           # -*- Extra requirements: -*-
       ],
       extras_require = {'test': ['plone.app.testing']},

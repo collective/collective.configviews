@@ -6,7 +6,6 @@
     i18n_domain="collective.configviews">
 
   <five:registerPackage package="." initialize=".initialize" />
-  <include package="collective.registry" />
 
   <genericsetup:registerProfile
       name="default"
@@ -21,6 +20,10 @@
 
   <include package="plone.app.registry" />
   <include package=".browser" />
-  <include file="upgrades.zcml" />
+<!--   <adapter factory=".storage.AnnotationStorage" /> -->
+  <adapter factory=".provider.Provider"/>
+  <adapter name="site.plone.app.registry" factory=".provider.PloneRegistry"/>
+  <adapter name="context.zope.annotation" factory=".mutator.ZopeAnnotation"
+           provides=".interfaces.IConfigurationMutator"/>
 
 </configure>
