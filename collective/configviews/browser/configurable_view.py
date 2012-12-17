@@ -1,11 +1,10 @@
 import json
-from zope import interface
-from zope import schema
 
-from Products.Five import BrowserView
-from Products.Five import metaclass
+from zope import interface
+from Products.Five.browser import BrowserView
 
 from collective.configviews import interfaces
+
 
 class ConfigurableBaseView(BrowserView):
     """Base browserview make it configurable view"""
@@ -14,7 +13,7 @@ class ConfigurableBaseView(BrowserView):
 
     jsvarname = "collectiveconfigviews"
     settings_schema = interface.Interface
-    settings_providers = ('site.plone.app.registry','context.zope.annotation')
+    settings_providers = ('site.plone.app.registry', 'context.zope.annotation')
     settings_mutator = 'context.zope.annotation'
 
     def __init__(self, context, request):
@@ -32,4 +31,4 @@ class ConfigurableBaseView(BrowserView):
         return self._settings
 
     def settings_javascripts(self):
-        return "%s = %s"%(self.jsvarname, json.dumps(self.settings))
+        return "%s = %s" % (self.jsvarname, json.dumps(self.settings))
