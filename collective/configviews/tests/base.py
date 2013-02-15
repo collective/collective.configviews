@@ -1,10 +1,10 @@
 import unittest2 as unittest
-from zope import interface
-from plone.app import testing
 from collective.configviews.tests import layer
+
 
 class UnitTestCase(unittest.TestCase):
     pass
+
 
 class IntegrationTestCase(unittest.TestCase):
 

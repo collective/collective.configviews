@@ -1,20 +1,22 @@
-import base, utils
+from collective.configviews.tests import base
+from collective.configviews.tests import fake
+
 
 class ProviderPloneAppRegistryUnitTest(base.UnitTestCase):
 
     def setUp(self):
         from collective.configviews import provider
-        self.view = utils.FakeConfigurableView()
+        self.view = fake.FakeConfigurableView()
         self.schema = self.view.settings_schema
 
         self.provider_module = provider
         self.provider = provider.PloneRegistry(self.view)
-        self.provider.fields = {'foo':utils.FakeField('bar'),
-                                'boo':utils.FakeField('far')}
-        self.provider.registry = utils.FakeRegistry()
+        self.provider.fields = {'foo': fake.FakeField('bar'),
+                                'boo': fake.FakeField('far')}
+        self.provider.registry = fake.FakeRegistry()
 
     def test_get(self):
         settings = self.provider.get()
-        self.failUnless(len(settings)==2)
-        self.failUnless(settings['foo']=='bar')
-        self.failUnless(settings['boo']=='far')
+        self.failUnless(len(settings) == 2)
+        self.failUnless(settings['foo'] == 'bar')
+        self.failUnless(settings['boo'] == 'far')

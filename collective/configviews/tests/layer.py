@@ -4,6 +4,7 @@ from plone.app.testing import IntegrationTesting, FunctionalTesting
 
 from plone.testing import z2
 
+
 class Layer(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
@@ -17,7 +18,6 @@ class Layer(PloneSandboxLayer):
 
         z2.installProduct(app, 'collective.configviews')
 
-
     def setUpPloneSite(self, portal):
         self.applyProfile(portal, 'collective.configviews:default')
 
@@ -27,6 +27,6 @@ class Layer(PloneSandboxLayer):
 
 FIXTURE = Layer()
 INTEGRATION = IntegrationTesting(bases=(FIXTURE,),
-                                name="collective.configviews:Integration")
-FUNCTIONAL =  FunctionalTesting(bases=(FIXTURE,), 
-                                name="collective.configviews:Functional")
+                                 name="collective.configviews:Integration")
+FUNCTIONAL = FunctionalTesting(bases=(FIXTURE,),
+                               name="collective.configviews:Functional")

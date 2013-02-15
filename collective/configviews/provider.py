@@ -2,13 +2,13 @@ from zope import component
 from zope import interface
 from zope import schema
 from zope.annotation.interfaces import IAnnotations
-from zope.annotation.interfaces import IAttributeAnnotatable
 
 from plone.registry.interfaces import IRegistry
 
 from collective.configviews import interfaces
 
 STORAGE_KEY = "collective.configviews"
+
 
 class InterfaceDefault(object):
     """Implements IConfigurationProvider with Interface fields default"""
@@ -35,13 +35,14 @@ class InterfaceDefault(object):
             self.fields = schema.getFields(self.schema)
         return self.fields
 
+
 class PloneRegistry(InterfaceDefault):
     """Configuration provider based on plone.app.registry"""
     interface.implements(interfaces.IConfigurationProvider)
     component.adapts(interfaces.IConfigurableView)
 
     def __init__(self, view):
-        super(PloneRegistry,self).__init__(view)
+        super(PloneRegistry, self).__init__(view)
         self.registry = None
 
     def get(self):
@@ -63,6 +64,7 @@ class PloneRegistry(InterfaceDefault):
             self.registry = component.queryUtility(IRegistry)
         return self.registry
 
+
 class ZopeAnnotation(InterfaceDefault):
     """Implements ConfigProvider with Annotation"""
 
@@ -70,11 +72,11 @@ class ZopeAnnotation(InterfaceDefault):
     component.adapts(interfaces.IConfigurableView)
 
     def __init__(self, view):
-        super(ZopeAnnotation,self).__init__(view)
+        super(ZopeAnnotation, self).__init__(view)
         self.annotation = None
 
     def get(self):
-        """see IHarlequinStorage. This implementation return all default 
+        """see IHarlequinStorage. This implementation return all default
         values of the schema is nothing has already been saved"""
         annotation = self.getAnnotation()
         if STORAGE_KEY not in annotation.keys():
@@ -88,11 +90,12 @@ class ZopeAnnotation(InterfaceDefault):
             self.annotation = IAnnotations(self.context)
         return self.annotation
 
+
 class Provider(InterfaceDefault):
     """Aggregator of named providers"""
 
     def __init__(self, view):
-        super(Provider,self).__init__(view)
+        super(Provider, self).__init__(view)
         self.pnames = view.settings_providers
         self.providers = []
         self.configuration = {}
@@ -102,7 +105,7 @@ class Provider(InterfaceDefault):
             return self.configuration
 
         self.init_providers()
-        self.configuration = super(Provider, self).get() #load defaults
+        self.configuration = super(Provider, self).get()  # load defaults
 
         for provider in self.providers:
             configuration = provider.get()
@@ -112,7 +115,8 @@ class Provider(InterfaceDefault):
         return self.configuration
 
     def init_providers(self):
-        if len(self.providers)>1:return
+        if len(self.providers) > 1:
+            return
 
         for pname in self.pnames:
             adapter = component.queryAdapter(self.view,

@@ -7,6 +7,7 @@ from collective.configviews import interfaces
 
 from Products.Five import BrowserView
 
+
 class ConfigurationForm(AutoExtensibleForm, form.EditForm):
     """Form to configure default view"""
 
@@ -16,8 +17,8 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
 
     @property
     def schema(self):
-        """If viewname is provided in the request it will be used to get the view
-        else we use the default view"""
+        """If viewname is provided in the request it will be used
+        to get the view else we use the default view"""
         state = component.queryMultiAdapter((self.context, self.request),
                                             name='plone_context_state')
         url = state.view_url()
@@ -59,8 +60,11 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
     def getMutator(self):
         view = self.getView()
         name = view.settings_mutator
-        adapter = component.queryAdapter(view, interfaces.IConfigurationMutator,
-                                         name)
+        adapter = component.queryAdapter(
+            view,
+            interfaces.IConfigurationMutator,
+            name
+        )
         return adapter
 
 
@@ -69,7 +73,7 @@ ConfigurationFormView = layout.wrap_form(ConfigurationForm)
 
 class Utils(BrowserView):
     """Utils view"""
-    
+
     def config_allowed(self):
         #TODO: permission is already checked by plone
         viewname = self.context.getLayout()

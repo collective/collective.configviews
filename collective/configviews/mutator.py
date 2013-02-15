@@ -1,10 +1,10 @@
 from persistent.dict import PersistentDict
 from zope import interface
-from zope import schema
 
 from collective.configviews import provider, interfaces
 
 STORAGE_KEY = provider.STORAGE_KEY
+
 
 class ZopeAnnotation(provider.ZopeAnnotation):
     """Mutator based on annotation"""
@@ -33,11 +33,10 @@ class ZopeAnnotation(provider.ZopeAnnotation):
     def get_defaults(self):
         """This method return defaults values for the current view"""
         provider = interfaces.IConfigurationProvider(self.view)
-        #we are storing in annotation, so we want value outside of this provider
+        #we are storing in annotation, so we want value outside of this
         if 'zope.app.annotation' in provider.pnames:
             pnames = list(provider.pnames)
             pnames.remove('context.zope.annotation')
             provider.pnames = pnames
 
         return provider.get()
-
