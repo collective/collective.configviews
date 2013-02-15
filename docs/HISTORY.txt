@@ -1,10 +1,10 @@
 Changelog
 =========
 
-2.1 (unreleased)
+3.0 (unreleased)
 ----------------
 
-- Added collective.registry in ZCML to prevent tests from breaking [rnd0101]
+- Revert to 1.0 internal design. [toutpt]
 
 
 2.0 (2012-01-30)
