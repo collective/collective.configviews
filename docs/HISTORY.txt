@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.0 (unreleased)
-----------------
+3.0a1 (2013-02-15)
+------------------
 
 - Revert to 1.0 internal design. [toutpt]
 
