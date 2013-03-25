@@ -16,6 +16,11 @@ Features:
 Notes on VERSIONS
 =================
 
+
+.. image:: https://secure.travis-ci.org/collective/collective.configviews.png
+    :target: http://travis-ci.org/collective/collective.configviews
+
+
 3.0 is a back to 1.0.
 
 2.0 branch was about to use plone.app.registry on the context using
