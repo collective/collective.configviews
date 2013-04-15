@@ -37,6 +37,7 @@ setup(name='collective.configviews',
           'setuptools',
           'plone.autoform',
           'plone.app.registry',
+          'Products.CMFDynamicViewFTI>=4.0.4'
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},

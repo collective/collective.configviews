@@ -134,12 +134,10 @@ Companies
 * `Planet Makina Corpus <http://www.makina-corpus.org>`_
 * `Contact us <mailto:python@makina-corpus.org>`_
 
-Authors
+People
+------
 
 - JeanMichel FRANCOIS aka toutpt <toutpt@gmail.com>
-
-Contributors
-
 - Radim Novotny aka naro
 
 .. |makinacom| image:: http://depot.makina-corpus.org/public/logo.gif

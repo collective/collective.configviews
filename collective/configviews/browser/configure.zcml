@@ -6,7 +6,7 @@
       name="configviewsform"
       for="*"
       class=".form.ConfigurationFormView"
-      permission="zope2.View"
+      permission="cmf.ModifyViewTemplate"
       layer="collective.configviews.interfaces.IConfigViewsLayer"
       />
     <browser:page
