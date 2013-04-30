@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.2 (unreleased)
+3.0.2 (2013-04-30)
 ------------------
 
 - Fix configuration error by forcing the load zcml of CMFDynamicViewFTI [toutpt]
