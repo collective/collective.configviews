@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="portal_actions" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <object name="document_actions">
+  <object remove="true" name="configview" meta_type="CMF Action"/>
+ </object>
+</object>
