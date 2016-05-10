@@ -4,6 +4,8 @@ Changelog
 3.0.3 (unreleased)
 ------------------
 
+- Fixed i18n machinery
+  [keul]
 - Add uninstall profile.
   [thet]
 

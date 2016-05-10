@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from zope import component
 from z3c.form import form, button
 from plone.autoform.form import AutoExtensibleForm
 from plone.z3cform import layout
-
 from collective.configviews import interfaces
-
 from Products.Five import BrowserView
+from .. import _
 
 
 class ConfigurationForm(AutoExtensibleForm, form.EditForm):
@@ -28,7 +29,7 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
 
         self.request.response.redirect(url)
 
-    @button.buttonAndHandler(u'Save settings')
+    @button.buttonAndHandler(_(u'Save settings'))
     def handle_settings(self, action):
         data, errors = self.extractData()
         view = self.getView()
