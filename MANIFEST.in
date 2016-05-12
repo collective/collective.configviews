@@ -1,4 +1,4 @@
-include docs/*.txt
+graft collective
+graft docs
 include *.rst
-recursive-include collective *.css *.js *.pdf *.png *.po *.pot *.pt *.txt *.xml *.zcml
-global-exclude *.pyc *~ *.mo
+global-exclude *.pyc
