@@ -1,11 +1,14 @@
 Changelog
 =========
 
-3.0.4 (unreleased)
+3.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- When configuration is changed, an ``IConfigurationChangedEvent`` event is fired
+  [keul]
+- When view settings is modified also store a modification date inside a ``__modified__`` key.
+  This may help in rare cases when you need to check if configuration is "fresh"
+  [keul]
 
 3.0.3 (2016-05-12)
 ------------------

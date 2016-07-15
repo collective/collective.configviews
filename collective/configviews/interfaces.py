@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from zope import schema
 from zope import interface
+from zope.component.interfaces import IObjectEvent
 
 
 class IConfigViewsLayer(interface.Interface):
@@ -45,3 +48,7 @@ class IConfigViewsUtils(interface.Interface):
     """utils"""
     def config_allowed():
         """Check if the current default view is configurable"""
+
+
+class IConfigurationChangedEvent(IObjectEvent):
+    """Event fired when the view configuration is changed"""

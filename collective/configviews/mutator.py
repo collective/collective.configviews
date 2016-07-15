@@ -1,8 +1,12 @@
-from persistent.dict import PersistentDict
-from zope import interface
+# -*- coding: utf-8 -*-
 
 from collective.configviews import provider, interfaces
 from collective.configviews.provider import InterfaceDefault
+from DateTime import DateTime
+from persistent.dict import PersistentDict
+from zope import interface
+from zope.event import notify
+from .events import ConfigurationChangedEvent
 
 STORAGE_KEY = provider.STORAGE_KEY
 
@@ -30,6 +34,10 @@ class ZopeAnnotation(provider.ZopeAnnotation):
             if configuration[key] == defaults[key]:
                 continue
             annotation[STORAGE_KEY][key] = configuration[key]
+        annotation[STORAGE_KEY]['__modified__'] = DateTime()
+        notify(ConfigurationChangedEvent(
+            self.context, annotation[STORAGE_KEY], configuration
+        ))
 
     def get_defaults(self):
         """This method return defaults values for the current view"""
