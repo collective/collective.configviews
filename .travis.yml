@@ -15,6 +15,6 @@ install:
   - bin/buildout -N -t 3 -c travis.cfg annotate
   - bin/buildout -N -t 3 -c travis.cfg
 script:
-  - bin/createcoverage
+  - bin/createcoverage -d htmlcov
   - bin/code-analysis
   - bin/test
