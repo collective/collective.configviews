@@ -3,7 +3,6 @@ python: 2.7
 env:
   - TARGET=test
   - TARGET=coverage.sh
-  - TARGET=python-validation.sh
 
 install:
   - mkdir -p buildout-cache/eggs
