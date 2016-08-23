@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.0 (unreleased)
+3.1.0 (2016-08-23)
 ------------------
 
 - When configuration is changed, an ``IConfigurationChangedEvent`` event is fired
