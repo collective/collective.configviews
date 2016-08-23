@@ -27,7 +27,7 @@ class MutatorZopeAnnotationUnitTest(base.UnitTestCase):
         self.assertTrue(settings['boo'] == 'far')
         self.assertTrue(settings['new'] == 'one')
         annotation = self.mutator.annotation
-        #default should not be written
+        # default should not be written
         self.assertTrue('boo' not in annotation[self.key].keys())
 
     def test_get_defaults(self):

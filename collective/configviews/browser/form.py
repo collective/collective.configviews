@@ -34,7 +34,7 @@ class ConfigurationForm(AutoExtensibleForm, form.EditForm):
         data, errors = self.extractData()
         view = self.getView()
         if view is None:
-            #TODO: handle errors
+            # TODO: handle errors
             return
 
         mutator = self.getMutator()
@@ -76,7 +76,7 @@ class Utils(BrowserView):
     """Utils view"""
 
     def config_allowed(self):
-        #TODO: permission is already checked by plone
+        # TODO: permission is already checked by plone
         viewname = self.context.getLayout()
         view = component.queryMultiAdapter((self.context, self.request),
                                            name=viewname)

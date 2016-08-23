@@ -5,7 +5,7 @@ from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('collective.configviews')
 
 
-from browser.configurable_view import ConfigurableBaseView
+from browser.configurable_view import ConfigurableBaseView  # noqa
 
 
 def initialize(context):

@@ -21,9 +21,9 @@ class ZopeAnnotation(provider.ZopeAnnotation):
         annotation = self.getAnnotation()
         defaults = self.get_defaults()
 
-        #faster than parsing and cleanup:
+        # faster than parsing and cleanup:
         if STORAGE_KEY in annotation:
-            #be sure ZODB remove this
+            # be sure ZODB remove this
             del annotation[STORAGE_KEY]
 
         annotation[STORAGE_KEY] = PersistentDict()

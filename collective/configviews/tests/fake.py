@@ -1,4 +1,4 @@
-#FAKE implementation of interfaces
+# FAKE implementation of interfaces
 
 
 class FakeSchema(object):

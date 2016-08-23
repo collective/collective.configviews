@@ -9,7 +9,7 @@ from .interfaces import IConfigurationChangedEvent
 class ConfigurationChangedEvent(ObjectEvent):
     """Event fired when the view configuration is changed"""
 
-    def __init__(self, context, configuration, old_configuration) :
+    def __init__(self, context, configuration, old_configuration):
         super(ConfigurationChangedEvent, self).__init__(context)
         self.configuration = configuration
         self.old_configuration = old_configuration
