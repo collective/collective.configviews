@@ -38,9 +38,11 @@ setup(name='collective.configviews',
           'plone.autoform',
           'plone.app.registry',
           'Products.CMFDynamicViewFTI>=4.0.4'
-          # -*- Extra requirements: -*-
       ],
-      extras_require={'test': ['plone.app.testing']},
+      extras_require={'test': [
+            'unittest2',
+            'plone.app.testing'
+      ]},
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
