@@ -52,7 +52,7 @@ For example::
     class IMyViewSettings(interface.Interface):
         width = schema.ASCIILine(title=u"Width",
                                  default='620')
- 
+
         height = schema.ASCIILine(title=u"Height",
                                   default='620')
 
@@ -69,10 +69,10 @@ For example::
 IConfigurationProvider
 ======================
 
-This component is responsible to return settings. 
+This component is responsible to return settings.
 It has been implemented in different adapters
 
-Provider (no named adapter): this provider load default values from the 
+Provider (no named adapter): this provider load default values from the
 interface fields defaults values and it let other providers override values.
 It is an aggregation of all providers specified in the view throw the
 settings_providers attribute. Warning: The order is important, each settings
@@ -139,6 +139,7 @@ People
 
 - JeanMichel FRANCOIS aka toutpt <toutpt@gmail.com>
 - Radim Novotny aka naro
+- Luca Fabbri aka keul <luca@keul.it>
 
 .. |makinacom| image:: http://depot.makina-corpus.org/public/logo.gif
 .. _makinacom:  http://www.makina-corpus.com
